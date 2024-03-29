@@ -1,41 +1,33 @@
 <template>
   <header class="header">
     <div class="title">
-      <h1>Refs VS Reactive Data</h1>
+      <h1>Custom Events</h1>
     </div>
     <hr />
   </header>
   <main class="main">
-    <p>{{ numberTwo }}</p>
-    <button @click="numberTwo++">Increment</button>
-    <p>{{ person.name }} - {{ person.age }}</p>
-    <button @click="updatePerson">Update Person</button>
-    <p>{{ personTwo.name }} - {{ personTwo.age }}</p>
-    <button @click="updatePersonTwo">Update Person two</button>
+    <div>
+      <input v-model="firstName" />
+      <input v-model="lastName" />
+    </div>
+    <PersonGreeting
+      :firstName="firstName"
+      :lastName="lastName"
+      @CallHeroes="handleCallHeroes"
+    />
   </main>
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
-const numberTwo = ref(2);
-const person = ref({
-  name: "jhon",
-  age: 25,
-});
+import { ref } from "vue";
+import PersonGreeting from "./components/PersonGreeting.vue";
 
-const personTwo = reactive({
-  name: "tim",
-  age: 32,
-});
+const firstName = ref("Jackie");
+const lastName = ref("Chzan");
 
-const updatePerson = () => {
-  person.value.name = "scott";
-};
-
-const updatePersonTwo = () => {
-  personTwo.name = "tom";
-};
-
+function handleCallHeroes(fullName) {
+  alert(fullName);
+}
 </script>
 
 <style scoped>
