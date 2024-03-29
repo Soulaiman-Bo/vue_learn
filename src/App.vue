@@ -1,41 +1,47 @@
 <template>
   <header class="header">
     <div class="title">
-      <h1>Refs VS Reactive Data</h1>
+      <h1>Watch And WatchEffect</h1>
     </div>
     <hr />
   </header>
   <main class="main">
-    <p>{{ numberTwo }}</p>
-    <button @click="numberTwo++">Increment</button>
-    <p>{{ person.name }} - {{ person.age }}</p>
-    <button @click="updatePerson">Update Person</button>
-    <p>{{ personTwo.name }} - {{ personTwo.age }}</p>
-    <button @click="updatePersonTwo">Update Person two</button>
+    <textarea v-model="textContent"></textarea>
+    <p>{{ textContent }}</p>
+    <p v-if="istyping">Matt is Typing...</p>
   </main>
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
-const numberTwo = ref(2);
-const person = ref({
-  name: "jhon",
-  age: 25,
+import { ref, watch, watchEffect } from "vue";
+const textContent = ref("");
+const istyping = ref(false);
+
+watch(
+  textContent,
+  (newValue, oldValue) => {
+    console.log({ newValue }, { oldValue });
+  },
+  { immediate: true }
+);
+
+const stop = watchEffect((onInvalidate) => {
+  if (textContent.value.length > 0) {
+    istyping.value = true;
+
+    // if (textContent.value.length > 0) {
+    //   stop();
+    // }
+
+    const showTypingStatus = setTimeout(() => {
+      istyping.value = false;
+    }, 2000);
+
+    onInvalidate(() => {
+      clearInterval(showTypingStatus);
+    });
+  }
 });
-
-const personTwo = reactive({
-  name: "tim",
-  age: 32,
-});
-
-const updatePerson = () => {
-  person.value.name = "scott";
-};
-
-const updatePersonTwo = () => {
-  personTwo.name = "tom";
-};
-
 </script>
 
 <style scoped>
@@ -44,6 +50,7 @@ const updatePersonTwo = () => {
   align-items: center;
   flex-direction: column;
   gap: 3rem;
+  padding-block: 3rem;
 }
 .header {
   width: 100%;
