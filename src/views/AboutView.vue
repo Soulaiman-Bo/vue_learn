@@ -1,8 +1,17 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <NotficationHandler />
   </div>
 </template>
+
+
+
+<script setup>
+import NotficationHandler from "../components/NotificationHandler.vue"
+    
+
+</script>
+
 
 <style>
 @media (min-width: 1024px) {
@@ -13,3 +22,5 @@
   }
 }
 </style>
+
+
