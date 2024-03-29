@@ -1,24 +1,16 @@
 <template>
-  <div>Hello {{ fullname }}</div>
-  <button @click="sendEvent">Call Heroes</button>
+  <a :href="featuredLink">FeatureLink</a>
+  <p v-font-size:small>Small</p>
+  <p v-font-size>Meduim</p>
+  <p v-font-size:large>Large</p>
+
+  <my-header>
+    <template #title> Building own vue 3 Plugin </template>
+    <template #author> Soulaiman Bouhlal </template>
+  </my-header>
 </template>
 
 <script setup>
-import { computed, defineProps, defineEmits } from 'vue';
-
-
-const props = defineProps({
-  firstName: String,
-  lastName: String
-});
-
-const emit = defineEmits(['CallHeroes']);
-
-const fullname = computed(() => `${props.firstName} ${props.lastName}`);
-
-function sendEvent() {
-  emit('CallHeroes', `Calling ${fullname.value}` );
-}
 </script>
 
 <style scoped>
