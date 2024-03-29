@@ -1,80 +1,57 @@
-<script setup>
-import { RouterLink, RouterView } from "vue-router";
-</script>
-
 <template>
-  <header>
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+  <header class="header">
+    <div class="title">
+      <h1>Refs VS Reactive Data</h1>
     </div>
+    <hr />
   </header>
-
-  <RouterView />
+  <main class="main">
+    <p>{{ numberTwo }}</p>
+    <button @click="numberTwo++">Increment</button>
+    <p>{{ person.name }} - {{ person.age }}</p>
+    <button @click="updatePerson">Update Person</button>
+    <p>{{ personTwo.name }} - {{ personTwo.age }}</p>
+    <button @click="updatePersonTwo">Update Person two</button>
+  </main>
 </template>
 
+<script setup>
+import { ref, reactive } from "vue";
+const numberTwo = ref(2);
+const person = ref({
+  name: "jhon",
+  age: 25,
+});
+
+const personTwo = reactive({
+  name: "tim",
+  age: 32,
+});
+
+const updatePerson = () => {
+  person.value.name = "scott";
+};
+
+const updatePersonTwo = () => {
+  personTwo.name = "tom";
+};
+
+</script>
+
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+.main {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 3rem;
 }
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
+.header {
   width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
 }
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5rem;
 }
 </style>
